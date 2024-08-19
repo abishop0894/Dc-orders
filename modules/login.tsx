@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Input, Checkbox, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import Home from "./home"; // Import the protected component
@@ -10,6 +10,14 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is already logged in (i.e., localStorage has the 'authenticated' flag)
+    const isLoggedIn = localStorage.getItem("isAuthenticated");
+    if (isLoggedIn) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -21,6 +29,7 @@ export default function Login() {
 
     if (email === usernameEnv && password === passwordEnv) {
       setIsAuthenticated(true);
+      localStorage.setItem("isAuthenticated", "true"); // Set the authentication flag in localStorage
     } else {
       alert("Email or password is incorrect. Please try again.");
     }
@@ -31,7 +40,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex  h-screen w-screen items-center justify-center bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500 p-2 sm:p-4 lg:p-8">
+    <div className="flex h-screen w-screen items-center justify-center bg-gradient-to-br from-rose-400 via-fuchsia-500 to-indigo-500 p-2 sm:p-4 lg:p-8">
       <div className="flex p-5 w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-large">
         <p className="pb-2 text-xl font-medium">Log In</p>
         <form className="flex flex-col p-5 gap-3" onSubmit={handleLogin}>

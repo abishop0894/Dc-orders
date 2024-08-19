@@ -208,7 +208,7 @@ const DadcraftingCMS: React.FC = () => {
                     </label>
                     <input
                       type="text"
-                      className="w-full px-4 py-2 rounded-lg bg-gray-800"
+                      className="w-full px-4 text-black py-2 rounded-lg bg-gray-800"
                       value={cardsData[section][cardName]?.src || ""}
                       onChange={(e) =>
                         handleInputChange(
@@ -227,7 +227,7 @@ const DadcraftingCMS: React.FC = () => {
                     </label>
                     <input
                       type="text"
-                      className="w-full px-4 py-2 rounded-lg bg-gray-800"
+                      className="w-full px-4 py-2 text-black rounded-lg bg-gray-800"
                       value={cardsData[section][cardName]?.title || ""}
                       onChange={(e) =>
                         handleInputChange(
