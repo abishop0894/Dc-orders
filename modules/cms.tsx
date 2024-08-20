@@ -141,7 +141,7 @@ const DadcraftingCMS: React.FC = () => {
         >
           <input
             type="text"
-            className="w-full lg:w-1/2 px-4 py-2 rounded-lg bg-gray-800"
+            className="w-full text-black lg:w-1/2 px-4 py-2 rounded-lg bg-gray-800"
             value={videoSrc}
             onChange={(e) => setVideoSrc(e.target.value)}
             disabled={!videoEditMode}
