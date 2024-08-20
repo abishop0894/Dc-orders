@@ -5,5 +5,9 @@ import { Providers } from "./providers";
 import DadcraftingCMS from "@/modules/cms";
 import Login from "@/modules/login";
 export default function App() {
-  return <Login />;
+  return (
+    <Providers>
+      <Login />
+    </Providers>
+  );
 }
