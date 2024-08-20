@@ -53,7 +53,6 @@ export default function Orders() {
             trigger: "py-6",
             content: "pt-0 pb-6 text-base text-default-500",
           }}
-          items={data}
           selectionMode="multiple"
           variant="splitted"
         >
