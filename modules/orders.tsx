@@ -1,10 +1,7 @@
-"use client";
-
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { Providers } from "@/app/providers";
 import { useEffect, useState } from "react";
-import { data } from "@/lib/data";
 import { getOrders } from "@/lib/data/getDocs";
 
 interface Order {
@@ -16,6 +13,8 @@ interface Order {
 
 export default function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 5; // Set the number of orders to display per page
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -40,9 +39,19 @@ export default function Orders() {
     setSelectedImage(null);
   };
 
+  // Calculate the index of the first and last orders for the current page
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(orders.length / ordersPerPage);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   return (
     <Providers>
-      <div className="mx-auto  flex w-full max-w-4xl flex-col gap-6 mb-[2vh]">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 mb-[2vh]">
         <Accordion
           fullWidth
           keepContentMounted
@@ -56,7 +65,7 @@ export default function Orders() {
           selectionMode="multiple"
           variant="splitted"
         >
-          {orders.map((order, i) => (
+          {currentOrders.map((order, i) => (
             <AccordionItem
               key={i}
               indicator={<Icon icon="lucide:plus" width={24} />}
@@ -90,7 +99,26 @@ export default function Orders() {
             </AccordionItem>
           ))}
         </Accordion>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-center items-center gap-2 mt-4">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`px-3 py-1 rounded ${
+                currentPage === index + 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
+
+      {/* Modal for image preview */}
       {selectedImage && (
         <div
           className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
