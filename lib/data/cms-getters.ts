@@ -233,6 +233,59 @@ export const updateMilitaryTitle = async (
   }
 };
 
+
+
+export const updateCustomSrc = async (
+  cardName: string,
+  newSrc: string
+): Promise<void> => {
+  try {
+    const docRef = doc(db, "custom", cardName);
+    await updateDoc(docRef, { src: newSrc });
+    console.log("Custom src updated successfully");
+  } catch (error) {
+    console.error("Error updating custom src:", error);
+  }
+};
+
+export const updateCustomTitle = async (
+  cardName: string,
+  newTitle: string
+): Promise<void> => {
+  try {
+    const docRef = doc(db, "custom", cardName);
+    await updateDoc(docRef, { title: newTitle });
+  } catch (error) {
+    console.error("Error updating custom title:", error);
+  }
+};
+
+export const getCustomSrc = async (
+  cardName: string
+): Promise<string | null> => {
+  try {
+    const docRef = doc(db, "custon", cardName);
+    const docSnapshot = await getDoc(docRef);
+    return docSnapshot.exists() ? docSnapshot.data().src : null;
+  } catch (error) {
+    console.error("Error getting custom src:", error);
+    return null;
+  }
+};
+
+export const getCustomTitle = async (
+  cardName: string
+): Promise<string | null> => {
+  try {
+    const docRef = doc(db, "custom", cardName);
+    const docSnapshot = await getDoc(docRef);
+    return docSnapshot.exists() ? docSnapshot.data().title : null;
+  } catch (error) {
+    console.error("Error getting custom title:", error);
+    return null;
+  }
+};
+
 // // Example usage of getVideo
 // getVideo().then((video) => {
 //   if (video) {

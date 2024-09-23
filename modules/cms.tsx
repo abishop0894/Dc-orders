@@ -19,6 +19,10 @@ import {
   getMilitaryTitle,
   updateMilitarySrc,
   updateMilitaryTitle,
+  updateCustomSrc,
+  updateCustomTitle,
+  getCustomTitle,
+  getCustomSrc,
 } from "@/lib/data/cms-getters";
 
 type CardData = {
@@ -35,6 +39,7 @@ type CardsData = {
   military: SectionData;
   drinkwear: SectionData;
   sublimation: SectionData;
+  custom: SectionData
 };
 
 const DadcraftingCMS: React.FC = () => {
@@ -46,6 +51,7 @@ const DadcraftingCMS: React.FC = () => {
     military: {},
     drinkwear: {},
     sublimation: {},
+    custom: {}
   });
 
   const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({});
@@ -85,6 +91,7 @@ const DadcraftingCMS: React.FC = () => {
         getSublimationSrc,
         getSublimationTitle
       );
+      await fetchSectionData("custom", getCustomSrc, getCustomTitle);
     };
 
     fetchVideo();
@@ -192,6 +199,11 @@ const DadcraftingCMS: React.FC = () => {
           section: "sublimation" as keyof CardsData,
           updateSrcFunc: updateSublimationSrc,
           updateTitleFunc: updateSublimationTitle,
+        },
+        {
+          section: "custom" as keyof CardsData,
+          updateSrcFunc: updateCustomSrc,
+          updateTitleFunc: updateCustomTitle,
         },
       ].map(({ section, updateSrcFunc, updateTitleFunc }) => (
         <div key={section} className="mb-8">
